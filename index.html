@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>제2복무 24개월 재정 플래너</title>
+<meta name="theme-color" content="#f4f6f9">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--text:#1a2332;--muted:#6b7a8d;--border:#e2e8f0;--blue:#2563eb;--blue-bg:#dbeafe;--green:#16a34a;--green-bg:#dcfce7;--red:#dc2626;--red-bg:#fee2e2;--amber:#f59e0b;--input:#fffbeb;--shadow:0 1px 3px rgba(26,35,50,.06);--radius:12px;--font:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.45;min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:1.25rem 1rem 5rem}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.5rem 1.25rem;margin-bottom:1rem}
+h1{font-size:1.55rem;font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.05rem;font-weight:700;margin-bottom:.75rem;letter-spacing:-.01em}
+h3{font-size:.9rem;font-weight:700;margin:0 0 .6rem;color:var(--muted)}
+.meta{font-size:.8rem;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;margin-bottom:1rem}
+.motto{border-left:4px solid var(--red);font-weight:600;font-size:.92rem;line-height:1.7}
+.tabs{display:flex;gap:.35rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.3rem;box-shadow:var(--shadow);margin-bottom:1rem;overflow-x:auto;position:sticky;top:.5rem;z-index:5}
+.tabs button{flex:1 0 auto;appearance:none;border:none;background:transparent;color:var(--text);padding:.5rem .55rem;border-radius:999px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--blue);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin-bottom:1rem}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem .9rem;box-shadow:var(--shadow)}
+.kpi .v{font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+.kpi .l{font-size:.8rem;color:var(--muted)}
+.kpi .d{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+.good{color:var(--green)}.bad{color:var(--red)}
+.bar{height:10px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:.5rem}
+.bar i{display:block;height:100%;background:var(--green)}
+.grid2{display:grid;gap:1rem;grid-template-columns:1fr}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:1rem;font-size:.78rem;color:var(--muted);margin-bottom:.4rem;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.25rem;border-radius:2px;background:var(--c);margin-right:.35rem;vertical-align:middle}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+td{padding:.42rem .2rem;border-bottom:1px solid var(--border)}
+td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+tr.sum td{font-weight:700}
+tr.sub td{color:var(--muted)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.35rem .45rem;box-shadow:var(--shadow);margin-bottom:.75rem}
+.toolbar button{appearance:none;border:none;background:transparent;width:2.4rem;height:2.4rem;border-radius:999px;font-size:1.1rem;cursor:pointer;color:var(--text)}
+.toolbar button:disabled{opacity:.3}
+.mlabel{font-weight:700;font-size:1.05rem;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
+.chips button{appearance:none;border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:.3rem .5rem;font:inherit;font-size:.78rem;cursor:pointer;color:var(--text)}
+.chips button.done{background:var(--green-bg);border-color:#4ade80}
+.chips button.on{outline:2px solid var(--blue);outline-offset:1px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem .75rem}
+@media(min-width:760px){.fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
+label{display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted);min-width:0}
+input,select,textarea{font:inherit;font-size:16px;color:var(--text);background:var(--input);border:1px solid #e5d9a8;border-radius:8px;padding:.5rem .6rem;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:0;background:#fff}
+textarea{min-height:5rem;font-size:13px;font-family:ui-monospace,monospace}
+.full{grid-column:1/-1}
+.calc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+@media(min-width:760px){.calc{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.calc div{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:.5rem .6rem}
+.calc b{display:block;font-size:1rem}
+.calc small{color:var(--muted);font-size:.75rem}
+.btns{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.btn{appearance:none;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.55rem 1rem;font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;color:var(--text)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.danger{color:var(--red);border-color:#fca5a5}
+ul.list{padding-left:1.1rem;font-size:.92rem;line-height:1.8}
+.closing{text-align:center;font-weight:700;color:var(--red);font-size:1.05rem;margin-top:1rem}
+.note{font-size:.8rem;color:var(--muted);margin-top:.6rem}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>제2복무 24개월 재정 플래너</h1><div class="meta">2027.03 ~ 2029.02 · 목표: 마이너스통장 0원 · 단위 만원</div></div>
+  <div class="meta" id="saveState"></div>
+</header>
+<div class="panel motto">나는 더 이상 잃어버린 돈을 쫓지 않는다.<br>매일 내가 벌어들인 돈으로 내 삶을 되찾는다.<br>시장은 통제할 수 없어도 나의 행동은 통제할 수 있다.<br>24개월 후, 나는 나 자신에게 자유를 선물한다.</div>
+<nav class="tabs" id="tabs">
+  <button data-t="dash" class="on">대시보드</button><button data-t="month">월별 기록</button><button data-t="pre">예비소집</button><button data-t="set">설정</button><button data-t="goal">다짐·백업</button>
+</nav>
+
+<section id="t-dash">
+  <div class="kpis" id="kpis"></div>
+  <div class="grid2">
+    <div class="panel"><h2>마통 잔액 추이</h2><div id="ch1"></div></div>
+    <div class="panel"><h2>순자산 추이</h2><div id="ch2"></div></div>
+  </div>
+  <div class="panel"><h2>목표 vs 실제 상환</h2><div id="ch3"></div></div>
+  <div class="grid2">
+    <div class="panel"><h2>수입원별 합계</h2><table id="incT"></table></div>
+    <div class="panel"><h2>지출 항목별 합계</h2><table id="spT"></table></div>
+  </div>
+</section>
+
+<section id="t-month" class="hide">
+  <div class="toolbar"><button id="mPrev" aria-label="이전 달">◀</button><div class="mlabel" id="mLabel"></div><button id="mNext" aria-label="다음 달">▶</button></div>
+  <div class="chips" id="mChips"></div>
+  <div class="panel"><h2>이번 달 계산</h2><div class="calc" id="mCalc"></div>
+    <div class="btns"><button class="btn primary" id="mFill">기본값 채우기 (실수령·기본상환·전세)</button></div></div>
+  <div id="mForm"></div>
+</section>
+
+<section id="t-pre" class="hide">
+  <div class="panel"><h2>예비소집기간 · 2026.11.21 ~ 2027.02.28</h2><p class="meta">적금 만기·전세대출 실행을 반영하고 정식 플래너의 초기 마통 잔액을 확정해.</p></div>
+  <div class="chips" id="pChips"></div>
+  <div class="panel"><h2>계산</h2><div class="calc" id="pCalc"></div></div>
+  <div class="panel"><div class="fields" id="pForm"></div></div>
+</section>
+
+<section id="t-set" class="hide">
+  <div class="panel"><h2>초기 재정 현황</h2><div class="fields" id="sForm1"></div><div class="calc" id="sCalc1" style="margin-top:.8rem"></div></div>
+  <div class="panel"><h2>소득·상환·금리</h2><div class="fields" id="sForm2"></div><div class="calc" id="sCalc2" style="margin-top:.8rem"></div></div>
+  <div class="panel"><h2>월 예산 (실제 소비와 구분)</h2><div class="fields" id="sForm3"></div><div class="calc" id="sCalc3" style="margin-top:.8rem"></div>
+    <p class="note">회사 식비 쿠폰은 별도 지급이라 수입에 넣지 않음 · 식비는 쿠폰 사용 후 본인 부담액 기준. 금리 기본값 3.91%는 2026.11.21 우리은행 6M 변동 기준금리, 가산 1.7%는 예시값이니 본인 조건에 맞게 수정.</p></div>
+</section>
+
+<section id="t-goal" class="hide">
+  <div class="panel"><h2>원칙</h2><ul class="list">
+    <li>대출을 이용한 신규 투자 금지</li><li>손실 복구를 위한 레버리지 투자 금지</li><li>손실 가능성이 큰 투자로 무리한 복구 금지</li>
+    <li>투자·부업 수익은 고정수입이 아님 · 0원인 달도 괜찮음</li><li>24개월은 목표 · 3~4년에 걸쳐 갚아도 실패 아님</li></ul></div>
+  <div class="panel"><h2>최종 목표와 보상</h2><p class="meta" style="margin-bottom:.5rem">마통 원금과 이자를 모두 갚아 잔액 0원 확인 + 비상자금 별도 확보 후, 미리 마련해 둔 보상금으로 특별한 하루.</p><ul class="list">
+    <li>최고급 오마카세 또는 고급 음식점 방문</li><li>한강 전망을 감상하며 좋아하는 위스키 한잔</li><li>지난 투자 실패와 삶의 경험 되돌아보기</li><li>스스로 잘한 점과 부족했던 점 정리</li><li>앞으로의 새로운 삶에 대한 목표 수립</li></ul></div>
+  <div class="panel"><h2>마지막 기록란</h2><div class="fields" id="fForm"></div>
+    <div class="closing">"정말 고생 많았다. 이제는 나를 위해 살자."</div></div>
+  <div class="panel"><h2>저장·백업</h2>
+    <p class="meta">입력값은 이 기기 브라우저(localStorage)에 자동 저장돼. 다른 기기로 옮기거나 혹시 몰라 백업하려면 파일로 받아 둬. 서버로는 아무것도 전송되지 않아.</p>
+    <div class="btns"><button class="btn primary" id="bDown">백업 파일 받기</button><button class="btn" id="bCopy">백업 내용 복사</button>
+      <label class="btn" style="flex-direction:row;color:var(--text);font-size:.88rem">파일에서 불러오기<input type="file" id="bFile" accept="application/json,.json" style="display:none"></label></div>
+    <textarea id="bPaste" placeholder="백업 내용을 붙여넣고 [붙여넣은 내용 불러오기]" style="margin-top:.75rem"></textarea>
+    <div class="btns"><button class="btn" id="bLoad">붙여넣은 내용 불러오기</button><button class="btn danger" id="bReset">전체 초기화</button></div>
+    <p class="note" id="bMsg"></p></div>
+</section>
+</div>
+
+<script>
+const KEY="jebokmu-planner-v1";
+const DEF_S={curMt:"",stock:"",gun:"",gunJ:"",deposit:"",rBt:"80",rHana:"90",initOv:"",salY:"",net:"",baseRep:"",target:"",extraT:"",base:"3.91",spread:"1.7"};
+const BUDGET=[["house","주거비·관리비·대출이자"],["food","식비"],["trans","교통비"],["gym","헬스장"],["cloth","의류비"],["yfs","청년미래적금"],["isa","ISA"],["sub","주택청약"]];
+const DEF_B={};
+const INC=[["sal","근로소득"],["coin","코인 실현손익"],["ipo","공모주 실현손익"],["stk","주식 실현손익"],["resell","리셀 순이익"],["side","웨이팅·부업 순이익"],["air","에어드롭 수익"],["etc","기타 소득"]];
+const REC=[["rec","기존 투자금 회수 (수익 아님)"]];
+const SPEND=[["house","주거비·관리비 (이자 제외)"],["food","식비 (쿠폰 후 본인부담)"],["trans","교통비"],["gym","운동비"],["cloth","의류비"],["life","기타 생활비"],["tax","세금 및 수수료"]];
+const INT=[["int","대출이자 (실제)"]];
+const SAVE=[["yfs","청년미래적금 납입"],["isa","ISA 납입"],["sub","주택청약 납입"],["newinv","신규 투자금"],["invval","투자자산 평가액"],["unreal","미실현 평가손익"]];
+const DEBT=[["rep","마통 원금 상환액"],["borrow","추가 차입액"],["jl","전세대출 잔액"],["ol","기타 대출 잔액"]];
+const ASSET=[["cash","현금성 자산"],["stkv","주식 평가액"],["coinv","코인 평가액"],["dep","적금·예금 잔액"],["jd","전세보증금 반환채권"],["oth","기타 자산"]];
+const MKEYS=[...INC,...REC,...SPEND,...INT,...SAVE,...DEBT,...ASSET].map(f=>f[0]);
+const PRE=[["inc","근로·기타 수입"],["spend","총 소비"],["gunRecv","군적금 수령액"],["gunJ","군적금 → 전세보증금"],["gunMt","군적금 → 마통 상환"],["rep","기타 마통 원금상환"],["borrow","추가 차입"],["jl","전세대출 잔액"],["stk","주식 평가액"],["cash","현금성 자산"],["dep","적금·예금"],["jd","전세보증금 반환채권"],["oth","기타 자산"]];
+const PRE_M=["2026.11","2026.12","2027.01","2027.02"];
+const MONTHS=Array.from({length:24},(_,i)=>{const t=2+i;return `${2027+Math.floor(t/12)}.${String(t%12+1).padStart(2,"0")}`});
+const ymAfter=k=>{const t=2+k;return `${2027+Math.floor(t/12)}년 ${t%12+1}월`};
+const n=v=>{const x=parseFloat(String(v??"").replace(/,/g,""));return isFinite(x)?x:0};
+const has=v=>String(v??"").trim()!=="";
+const won=v=>`${(Math.round(v*10)/10).toLocaleString("ko-KR")}만`;
+const sgn=v=>(v>=0?"+":"")+won(v);
+const pct=v=>`${(v*100).toFixed(1)}%`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const blank=()=>({s:{...DEF_S},b:{...DEF_B},loan:"하나",pre:PRE_M.map(()=>({})),m:MONTHS.map(()=>({})),fin:{}});
+function norm(p){const b=blank();p=p||{};return{s:{...b.s,...(p.s||{})},b:{...b.b,...(p.b||{})},loan:p.loan==="버팀목"?"버팀목":"하나",
+  pre:PRE_M.map((_,i)=>({...((p.pre||[])[i]||{})})),m:MONTHS.map((_,i)=>({...((p.m||[])[i]||{})})),fin:{...(p.fin||{})}}}
+let saveOk=true,st;
+try{st=norm(JSON.parse(localStorage.getItem(KEY)||"null"))}catch(e){st=blank();saveOk=false}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));saveOk=true}catch(e){saveOk=false}
+  $("saveState").textContent=saveOk?"자동 저장됨 · 이 기기 브라우저":"자동 저장 불가 · 다짐·백업 탭에서 백업해 둬"}
+
+function calc(){
+  const s=st.s,ratio=(st.loan==="버팀목"?n(s.rBt):n(s.rHana))/100,loanAmt=n(s.deposit)*ratio,selfDep=n(s.deposit)-loanAmt;
+  const gunJ=has(s.gunJ)?n(s.gunJ):Math.min(n(s.gun),selfDep),gunMt=n(s.gun)-gunJ,expected=n(s.curMt)-gunMt,rate=n(s.base)+n(s.spread);
+  const budgetSum=BUDGET.reduce((a,f)=>a+n(st.b[f[0]]),0);
+  let bop=n(s.curMt),touched=false,preLastNw=null;
+  const pre=st.pre.map(r=>{if(has(r.gunMt)||has(r.rep)||has(r.borrow))touched=true;const repT=n(r.gunMt)+n(r.rep),eop=bop+n(r.borrow)-repT;
+    const rec=PRE.some(f=>has(r[f[0]])),asset=n(r.stk)+n(r.cash)+n(r.dep)+n(r.jd)+n(r.oth),debt=eop+n(r.jl);
+    const o={bop,repT,eop,rec,asset,debt,nw:asset-debt};if(rec)preLastNw=o.nw;bop=eop;return o});
+  const initMt=has(s.initOv)?n(s.initOv):touched?pre[3].eop:expected,target=n(s.target);
+  let b2=initMt,cumRep=0,cumBor=0,prevNw=preLastNw;
+  const rows=st.m.map((r,i)=>{const flag=MKEYS.some(k=>has(r[k])),inc=INC.reduce((a,f)=>a+n(r[f[0]]),0),spend=SPEND.reduce((a,f)=>a+n(r[f[0]]),0);
+    const eop=b2+n(r.borrow)-n(r.rep),eint=b2*rate/100/12;cumRep+=n(r.rep);cumBor+=n(r.borrow);
+    const asset=ASSET.reduce((a,f)=>a+n(r[f[0]]),0),debt=eop+n(r.jl)+n(r.ol),nw=asset-debt,dnw=flag&&prevNw!==null?nw-prevNw:null;if(flag)prevNw=nw;
+    const o={flag,inc,extra:inc-n(r.sal),spend,bop:b2,eop,eint,bal:inc+n(r.rec)-spend-n(r.int),asset,debt,nw,dnw,cumRep,cumNet:cumRep-cumBor,
+      pct:initMt>0?cumRep/initMt:0,remain:Math.max(0,initMt-(cumRep-cumBor)),plan:Math.max(0,initMt-(i+1)*target),gap:n(r.rep)-target};b2=eop;return o});
+  const rec=rows.filter(r=>r.flag).length,netRep=cumRep-cumBor,remain=Math.max(0,initMt-netRep),avg=rec>0&&netRep>0?netRep/rec:target;
+  const left=remain>0&&avg>0?Math.ceil(remain/avg):0;let last=-1;rows.forEach((r,i)=>{if(r.flag)last=i});
+  return{ratio,loanAmt,selfDep,gunJ,gunMt,expected,rate,budgetSum,pre,initMt,rows,rec,cumRep,cumBor,remain,avg,left,done:ymAfter(rec+left-1),last,
+    extraSum:rows.reduce((a,r)=>a+r.extra,0),target,lastNw:last>=0?rows[last].nw:null};
+}
+
+/* ---------- charts (SVG) ---------- */
+const W=560,H=260,PL=74,PR=12,PT=12,PB=28;
+function scale(vals){const f=vals.filter(v=>v!==null&&isFinite(v));let lo=Math.min(0,...f),hi=Math.max(4,...f);if(hi===lo)hi=lo+4;return{lo,hi,y:v=>PT+(H-PT-PB)*(1-(v-lo)/(hi-lo))}}
+function axes(sc,count){const x=i=>PL+(W-PL-PR)*(count===1?0.5:i/(count-1));let g="";
+  for(let k=0;k<=4;k++){const v=sc.lo+(sc.hi-sc.lo)*k/4,y=sc.y(v);g+=`<line x1="${PL}" x2="${W-PR}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${PL-6}" y="${y+4}" text-anchor="end" font-size="15" fill="#6b7a8d">${won(Math.round(v))}</text>`}
+  MONTHS.forEach((m,i)=>{if(i%6===0||i===23)g+=`<text x="${x(i)}" y="${H-8}" text-anchor="${i===23?"end":i===0?"start":"middle"}" font-size="15" fill="#6b7a8d">${m.slice(2)}</text>`});return{g,x}}
+function lineChart(series){const all=series.flatMap(s=>s.values),sc=scale(all),{g,x}=axes(sc,24);let p="";
+  series.forEach(s=>{let d="",pen=false;s.values.forEach((v,i)=>{if(v===null||!isFinite(v)){pen=false;return}d+=(pen?"L":"M")+x(i).toFixed(1)+" "+sc.y(v).toFixed(1);pen=true});
+    p+=`<path d="${d}" fill="none" stroke="${s.c}" stroke-width="2.5" ${s.dash?'stroke-dasharray="6 5"':""} stroke-linejoin="round"/>`;
+    s.values.forEach((v,i)=>{if(!s.dash&&v!==null&&isFinite(v))p+=`<circle cx="${x(i)}" cy="${sc.y(v)}" r="3" fill="${s.c}"/>`})});
+  if(sc.lo<0)p+=`<line x1="${PL}" x2="${W-PR}" y1="${sc.y(0)}" y2="${sc.y(0)}" stroke="#94a3b8"/>`;
+  return `<div class="legend">${series.map(s=>`<span style="--c:${s.c}">${s.name}</span>`).join("")}</div><svg viewBox="0 0 ${W} ${H}" role="img">${g}${p}</svg>`}
+function barChart(target,actual){const sc=scale([...target,...actual]),{g}=axes(sc,24),cw=(W-PL-PR)/24;let p="";
+  actual.forEach((v,i)=>{const x0=PL+cw*i+cw*0.2,y0=sc.y(Math.max(v,0)),h=Math.abs(sc.y(v)-sc.y(0));p+=`<rect x="${x0}" y="${y0}" width="${cw*0.6}" height="${h}" rx="2" fill="${v>=target[i]?"#16a34a":"#60a5fa"}"/>`});
+  const yt=sc.y(target[0]);p+=`<line x1="${PL}" x2="${W-PR}" y1="${yt}" y2="${yt}" stroke="#dc2626" stroke-dasharray="6 5" stroke-width="2"/>`;
+  const g2=g.replace(/<text x="([\d.]+)" y="${H-8}"/g,(m0,xx)=>m0);
+  return `<div class="legend"><span style="--c:#dc2626">월 목표</span><span style="--c:#16a34a">목표 달성</span><span style="--c:#60a5fa">목표 미달</span></div><svg viewBox="0 0 ${W} ${H}">${g2}${p}</svg>`}
+
+/* ---------- render ---------- */
+let mi=0,pi=0;
+function kpi(v,l,d,cls){return `<div class="kpi"><div class="l">${l}</div><div class="v ${cls||""}">${v}</div>${d?`<div class="d">${d}</div>`:""}</div>`}
+function renderDash(c){const gap=c.cumRep-c.rec*c.target,ach=c.initMt>0?c.cumRep/c.initMt:0;
+  $("kpis").innerHTML=(c.initMt<=0||c.target<=0?`<div class="kpi" style="grid-column:1/-1;border-color:var(--amber)"><div class="l">처음 설정</div><div class="d" style="font-size:.88rem;color:var(--text)">설정 탭에서 현재 마통 부채(또는 초기 마통 확정값), 월 실수령액, 월 상환 목표, 월 예산을 먼저 입력해. 입력값은 이 기기 브라우저에만 저장돼.</div></div>`:"")+kpi(won(c.remain),"남은 마통 원금",`초기 ${won(c.initMt)}`)
+   +kpi(pct(ach),"상환 달성률",`누적 상환 ${won(c.cumRep)}<div class="bar"><i style="width:${Math.min(100,ach*100)}%"></i></div>`)
+   +kpi(pct(c.rec/24),"24개월 진행률",`${c.rec}개월 기록<div class="bar"><i style="width:${c.rec/24*100}%;background:var(--blue)"></i></div>`)
+   +kpi(sgn(gap),"목표 대비 차이",`목표 누적 ${won(c.rec*c.target)}`,gap>=0?"good":"bad")
+   +kpi(c.initMt<=0?"-":c.remain<=0?"완제!":c.avg>0?c.done:"설정 필요","예상 상환 완료월",c.rec>0?`월평균 순상환 ${won(c.avg)} 기준`:"월 상환 목표 기준 · 3~4년도 실패 아님")
+   +kpi(c.lastNw===null?"-":won(c.lastNw),"최근 월말 순자산",c.rec?`${MONTHS[c.last]} 기준`:"기록 전");
+  $("ch1").innerHTML=lineChart([{name:"계획 잔액",c:"#94a3b8",dash:true,values:c.rows.map(r=>r.plan)},{name:"실제 마통 잔액",c:"#2563eb",values:c.rows.map(r=>r.flag?r.eop:null)}]);
+  $("ch2").innerHTML=c.rec?lineChart([{name:"월말 순자산",c:"#16a34a",values:c.rows.map(r=>r.flag?r.nw:null)}]):`<p class="meta">월별 기록을 입력하면 그려져.</p>`;
+  $("ch3").innerHTML=barChart(MONTHS.map(()=>c.target),st.m.map(r=>n(r.rep)));
+  const sk=k=>st.m.reduce((a,r)=>a+n(r[k]),0),row=(a,b,cl)=>`<tr class="${cl||""}"><td>${a}</td><td>${b}</td></tr>`;
+  $("incT").innerHTML=INC.map(f=>row(f[1],won(sk(f[0])))).join("")+row("월간 총수입 합계",won(INC.reduce((a,f)=>a+sk(f[0]),0)),"sum")
+    +row("기존 투자금 회수 (별도)",won(sk("rec")),"sub")+row("추가수익 연환산 / 목표",`${c.rec?won(c.extraSum/c.rec*12):"-"} / ${won(n(st.s.extraT))}`,"sub");
+  $("spT").innerHTML=SPEND.map(f=>row(f[1],won(sk(f[0])))).join("")+row("월간 총소비 합계",won(SPEND.reduce((a,f)=>a+sk(f[0]),0)),"sum")
+    +row("대출이자 합계",won(sk("int")),"sub")+row("저축 납입 합계 (소비 아님)",won(sk("yfs")+sk("isa")+sk("sub")),"sub")}
+const cell=(l,v)=>`<div><small>${l}</small><b>${v}</b></div>`;
+function fieldHTML(list,obj,scope,num=true){return list.map(f=>`<label>${f[1]}<input ${num?'type="text" inputmode="decimal"':'type="text"'} data-scope="${scope}" data-k="${f[0]}" value="${esc(obj[f[0]]??"")}" placeholder="${num?"만원":""}"></label>`).join("")}
+function renderMonthForm(){const r=st.m[mi],g=(t,l)=>`<div class="panel"><h3>${t}</h3><div class="fields">${fieldHTML(l,r,"m")}</div></div>`;
+  $("mForm").innerHTML=g("수입",[...INC,...REC])+g("지출 (상환·저축 이체는 소비 아님)",[...SPEND,...INT])+g("저축·투자 (평가손익은 순자산에만 반영)",SAVE)+g("부채",DEBT)+g("자산",ASSET)
+    +`<div class="panel"><h3>메모</h3><div class="fields"><label class="full"><input type="text" data-scope="m" data-k="memo" value="${esc(r.memo??"")}"></label></div></div>`}
+function renderMonth(c){const r=c.rows[mi];$("mLabel").textContent=`${mi+1}회차 · ${MONTHS[mi]}`;$("mPrev").disabled=mi===0;$("mNext").disabled=mi===23;
+  $("mChips").innerHTML=MONTHS.map((m,i)=>`<button data-i="${i}" class="${c.rows[i].flag?"done":""} ${i===mi?"on":""}">${m.slice(2)}</button>`).join("");
+  $("mCalc").innerHTML=cell("월초 → 월말 마통",`${won(r.bop)} → ${won(r.eop)}`)+cell("월간 총수입 (회수 제외)",won(r.inc))+cell("월간 총소비 (이자 제외)",won(r.spend))
+    +cell("생활수지",r.flag?won(r.bal):"-")+cell("예상 마통이자 (참고)",won(r.eint))+cell("월말 순자산",r.flag?won(r.nw):"-")
+    +cell("전월 대비 순자산",r.dnw===null?"-":sgn(r.dnw))+cell("목표 대비 상환",r.flag?`<span class="${r.gap>=0?"good":"bad"}">${sgn(r.gap)}</span>`:"-")
+    +cell("누적 상환",won(r.cumRep))+cell("달성률",pct(r.pct))+cell("남은 원금",won(r.remain))+cell("계획 잔액",won(r.plan))}
+function renderPre(c){const r=c.pre[pi];$("pChips").innerHTML=PRE_M.map((m,i)=>`<button data-i="${i}" class="${c.pre[i].rec?"done":""} ${i===pi?"on":""}">${m}</button>`).join("");
+  $("pCalc").innerHTML=cell("월초 → 월말 마통",`${won(r.bop)} → ${won(r.eop)}`)+cell("총 원금상환",won(r.repT))+cell("순자산",r.rec?won(r.nw):"-")+cell("정식 플래너 초기 마통",won(c.initMt))}
+function renderPreForm(){$("pForm").innerHTML=fieldHTML(PRE,st.pre[pi],"p")+`<label class="full">메모<input type="text" data-scope="p" data-k="memo" value="${esc(st.pre[pi].memo??"")}"></label>`}
+function renderSetForm(){$("sForm1").innerHTML=`<label class="full">전세대출<select data-scope="loan"><option value="하나" ${st.loan==="하나"?"selected":""}>하나은행 (보증금 90%)</option><option value="버팀목" ${st.loan==="버팀목"?"selected":""}>버팀목 (보증금 80%)</option></select></label>`
+    +fieldHTML([["curMt","현재 마통 부채"],["stock","주식 평가액"],["gun","군적금 만기 예상액"],["deposit","전세보증금"],["rHana","하나 대출 비율 (%)"],["rBt","버팀목 대출 비율 (%)"],["gunJ","군적금 → 보증금 (비우면 자동)"],["initOv","초기 마통 확정값 (직접)"]],st.s,"s");
+  $("sForm2").innerHTML=fieldHTML([["salY","예상 연봉 (세전)"],["net","월 실수령액"],["baseRep","월급 기본 상환"],["target","월 상환 목표"],["extraT","연간 추가수익 목표"],["base","6M 변동 기준금리 (%)"],["spread","가산금리 (%)"]],st.s,"s");
+  $("sForm3").innerHTML=fieldHTML(BUDGET,st.b,"b")}
+function renderSet(c){$("sCalc1").innerHTML=cell("예상 전세대출",won(c.loanAmt))+cell("본인 부담 보증금",won(c.selfDep))+cell("군적금 → 보증금 / 마통",`${won(c.gunJ)} / ${won(c.gunMt)}`)+cell("복직 시 예상 마통",won(c.expected))+cell("적용 초기 마통",won(c.initMt));
+  $("sCalc2").innerHTML=cell("적용 마통 금리",c.rate.toFixed(2)+"%")+cell("월 예상 이자 (초기)",won(c.initMt*c.rate/100/12))+cell("연간 상환 목표",won(c.target*12))+cell("24개월 상환 목표",won(c.target*24));
+  const net=n(st.s.net);$("sCalc3").innerHTML=cell("예산 합계",won(c.budgetSum))+cell("실수령 − 예산",won(net-c.budgetSum))+cell("기본 상환 후 여유자금",won(net-c.budgetSum-n(st.s.baseRep)))}
+function renderFin(){$("fForm").innerHTML=fieldHTML([["date","마통 완제일"]],st.fin,"f",false).replace('type="text"','type="date"')+fieldHTML([["nw","최종 순자산"]],st.fin,"f")
+  +`<label class="full">나 자신에게 남기는 말<textarea data-scope="f" data-k="msg" style="font-family:var(--font);font-size:16px">${esc(st.fin.msg??"")}</textarea></label>`}
+function refresh(){const c=calc();renderDash(c);renderMonth(c);renderPre(c);renderSet(c)}
+function renderAllForms(){renderMonthForm();renderPreForm();renderSetForm();renderFin()}
+
+/* ---------- events ---------- */
+document.addEventListener("input",e=>{const t=e.target,sc=t.dataset&&t.dataset.scope;if(!sc||sc==="loan")return;const k=t.dataset.k,v=t.value;
+  if(sc==="m")st.m[mi][k]=v;else if(sc==="p")st.pre[pi][k]=v;else if(sc==="s")st.s[k]=v;else if(sc==="b")st.b[k]=v;else if(sc==="f")st.fin[k]=v;save();refresh()});
+document.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.scope==="loan"){st.loan=e.target.value;save();refresh()}});
+$("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
+  ["dash","month","pre","set","goal"].forEach(t=>$("t-"+t).classList.toggle("hide",t!==b.dataset.t));window.scrollTo({top:0})});
+const goM=i=>{mi=Math.max(0,Math.min(23,i));renderMonthForm();refresh()};
+$("mPrev").onclick=()=>goM(mi-1);$("mNext").onclick=()=>goM(mi+1);
+$("mChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b)goM(+b.dataset.i)});
+$("pChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b){pi=+b.dataset.i;renderPreForm();refresh()}});
+$("mFill").onclick=()=>{const c=calc(),r=st.m[mi];r.sal=st.s.net;r.rep=st.s.baseRep;r.jl=String(c.loanAmt);r.jd=st.s.deposit;save();renderMonthForm();refresh()};
+const msg=t=>{$("bMsg").textContent=t};
+const json=()=>JSON.stringify({app:"jebokmu-planner",v:1,savedAt:new Date().toISOString(),...st},null,1);
+function load(txt){try{const p=JSON.parse(txt);st=norm(p);save();renderAllForms();refresh();msg("불러오기 완료")}catch(e){msg("백업 형식이 올바르지 않아")}}
+$("bDown").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([json()],{type:"application/json"}));
+  a.download=`재정플래너-백업-${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();a.remove();msg("백업 파일 저장됨")};
+$("bCopy").onclick=()=>{navigator.clipboard?.writeText(json()).then(()=>msg("복사됨"),()=>{$("bPaste").value=json();msg("자동 복사가 막혀서 아래 칸에 넣어뒀어. 길게 눌러 복사해")})};
+$("bFile").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(confirm("백업으로 지금 입력값을 덮어쓸까?"))load(t);e.target.value=""})};
+$("bLoad").onclick=()=>{const t=$("bPaste").value.trim();if(!t)return msg("붙여넣은 내용이 없어");if(confirm("붙여넣은 백업으로 지금 입력값을 덮어쓸까?"))load(t)};
+$("bReset").onclick=()=>{if(!confirm("정말 전체 초기화할까? 모든 입력값이 지워져. (먼저 백업 파일을 받아두는 걸 추천)"))return;
+  if(!confirm("되돌릴 수 없어. 진짜 지울까?"))return;st=blank();save();renderAllForms();refresh();msg("초기화됨")};
+save();renderAllForms();refresh();
+</script>
+</body>
+</html>
